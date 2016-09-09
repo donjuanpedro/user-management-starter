@@ -1,31 +1,32 @@
 const _ = require('lodash');
 const Backbone = require('backbone');
 
-const UserView = Backbone.View.extend({
-  el: `<li class-"user-info"></li>`,
-
-  initialize() {
-    this.listenTo(this.model, 'sync', this.render);
-  },
+const UserProfileView = Backbone.View.extend({
+  el: `<div class="profile"></div>`,
 
   template: _.template(`
     <div>
       <label>Name:</label>
-      <%= user.get("name") %>
+      <span> <%= user.get("name") %> </span>
     </div>
     <div>
       <label>Email:</label>
-      <%= user.get("email") %>
+      <span> <%= user.get("email") %> </span>
     </div>
     <div>
       <label>Bio:</label>
-      <%= user.get("bio") %>
+      <p> <%= user.get("bio") %> </p>
     </div>
     <div>
       <label>Activated:</label>
       <input type="checkbox" <%= user.get('activated') ? 'checked' : '' %> />
     </div>
     `),
+
+    initialize() {
+      this.model.fetch();
+      this.listenTo(this.model, 'sync', this.render);
+    },
 
     events: {
       'click input[type="checkbox"]' : 'handleCheckBoxClick'
@@ -47,4 +48,4 @@ const UserView = Backbone.View.extend({
     }
 });
 
-module.exports = UserView;
+module.exports = UserProfileView;

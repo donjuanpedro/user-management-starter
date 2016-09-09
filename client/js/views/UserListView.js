@@ -16,11 +16,12 @@ const UserListView = Backbone.View.extend({
           <input type="submit" value="Submit" />
         </div>
       </form>
-      <ul></ul>
+      <ul class="user-list"></ul>
     </div>
   `,
 
   initialize() {
+    this.collection.fetch();
     this.listenTo(this.collection, 'update', this.render);
   },
 
@@ -49,10 +50,8 @@ const UserListView = Backbone.View.extend({
   render() {
     this.$el.find('ul').html('');
     this.collection.forEach((user) => {
-      const userView = new UserView({ model: user});
-      this.$el.find('ul').append(
-        userView.render().el
-      );
+      const view = new UserItemView({ model: user});
+      this.$el.find('ul').append(view.render().el);
     });
     return this;
   }

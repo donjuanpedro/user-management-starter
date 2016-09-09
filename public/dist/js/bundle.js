@@ -1,18 +1,15 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 const $ = require('jquery');
+const UserListView = require('./views/UserListView');
+const UsersCollection = require('./collections/UsersCollection');
 
 // Set jQuery in the window
 window.$ = window.jQuery = $;
 
-const UserListView = require('./views/UserListView');
-const UsersCollection = require('./collections/UsersCollection');
-
-const users = new UsersCollection();
-users.fetch();
-const view = new UserListView({ collection: users });
 const app = document.querySelector('#app');
+const listView = new UserListView({ collection: new UsersCollection() });
 
-app.appendChild(view.render().el);
+app.appendChild(listView.render().el);
 
 },{"./collections/UsersCollection":2,"./views/UserListView":4,"jquery":8}],2:[function(require,module,exports){
 const Backbone = require('backbone');
@@ -54,11 +51,12 @@ const UserListView = Backbone.View.extend({
           <input type="submit" value="Submit" />
         </div>
       </form>
-      <ul></ul>
+      <ul class="user-list"></ul>
     </div>
   `,
 
   initialize() {
+    this.collection.fetch();
     this.listenTo(this.collection, 'update', this.render);
   },
 
