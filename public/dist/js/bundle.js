@@ -58,6 +58,10 @@ const UserListView = Backbone.View.extend({
     </div>
   `,
 
+  initialize() {
+    this.listenTo(this.collection, 'update', this.render);
+  },
+
   events: {
     'submit form': 'handleFormSubmit'
   },
@@ -105,7 +109,7 @@ const UserView = Backbone.View.extend({
 
   template: _.template(`
     <div>
-      <label>Name: </label>
+      <label>Name:</label>
       <%= user.get("name") %>
     </div>
     <div>
@@ -118,12 +122,12 @@ const UserView = Backbone.View.extend({
     </div>
     <div>
       <label>Activated:</label>
-      <input type="checkbox" <%= user.get('activated') ? 'checked : '' %> />
+      <input type="checkbox" <%= user.get('activated') ? 'checked' : '' %> />
     </div>
     `),
 
   events: {
-    'click input[type="checkbox"]': 'handleCheckboxClick'
+    'click input[type="checkbox"]': 'handleCheckBoxClick'
   },
 
   handleCheckBoxClick(e) {

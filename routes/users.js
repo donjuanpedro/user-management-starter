@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const UserModel = require('../models/UserModel.js');
-const UsersController = require('../controllers/UsersController');
+const UsersController = require('../controllers/UsersController.js');
 
 /* GET users listing. */
 router.get('/', UsersController.list);

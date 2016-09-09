@@ -37,10 +37,10 @@ module.exports = {
     UserModel.findOne({_id: id}, function(err, user) {
       user.name = req.body.name;
       user.email = req.body.email;
-      item.bio = req.body.bio;
-      item.activated = req.body.activated;
+      user.bio = req.body.bio;
+      user.activated = req.body.activated;
 
-      item.save(function (err, user) {
+      user.save(function (err, user) {
         res.json(user);
       });
     });

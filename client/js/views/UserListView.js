@@ -20,6 +20,10 @@ const UserListView = Backbone.View.extend({
     </div>
   `,
 
+  initialize() {
+    this.listenTo(this.collection, 'update', this.render);
+  },
+
   events: {
     'submit form': 'handleFormSubmit'
   },
