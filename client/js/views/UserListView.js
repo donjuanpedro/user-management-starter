@@ -13,6 +13,7 @@ const UserListView = Backbone.View.extend({
           <input type="text" name="email" />
           <label for="bio">Bio</label>
           <input type="text" name="bio" />
+          <input type="file" name="pic" accept="image/*" />
           <input type="submit" value="Submit" />
         </div>
       </form>
@@ -35,6 +36,7 @@ const UserListView = Backbone.View.extend({
       name: form.find('input[name="name"]').val(),
       email: form.find('input[name="email"]').val(),
       bio: form.find('input[name="bio"]').val(),
+      pic: form.find('input[name="pic"]').val(),
     });
 
     user.save(null, {

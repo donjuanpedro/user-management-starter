@@ -6,7 +6,7 @@ const UserItemView = Backbone.View.extend({
 
   template: _.template(`
     <a href="#users/<%= user.get('_id') %>">
-      <img src="<%= user.get('image') %>" alt="Profile Pic" />
+      <img src="<%= user.get('pic') %>" alt="Profile Pic" />
     </a>
       <div>
         <span> <%= user.get('name') %> </span>
