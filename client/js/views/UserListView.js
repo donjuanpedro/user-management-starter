@@ -5,16 +5,26 @@ const UserModel = require('../models/UserModel');
 const UserListView = Backbone.View.extend({
   el: `
     <div>
-      <form action="/users" method="POST">
-        <div>
-          <label for="name">Name:</label>
-          <input type="text" name="name" />
-          <label for="email">Email Address</label>
-          <input type="text" name="email" />
-          <label for="bio">Bio</label>
-          <input type="text" name="bio" />
-          <input type="file" name="pic" accept="image/*" />
-          <input type="submit" value="Submit" />
+      <form class="form-inline" action="/users" method="POST">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-12 form-group text-left">
+              <label for="name">Name:</label>
+              <input type="text" class="form-control" name="name" />
+            </div>
+            <div class="col-xs-12 form-group text-left">
+              <label for="email">Email Address</label>
+              <input type="text" class="form-control" name="email" />
+            </div>
+            <div class="col-xs-12 form-group text-left">
+              <label for="bio">Bio</label>
+              <textarea type="text" class="form-control" class="form-control" name="bio" rows="6"></textarea>
+            </div>
+            <div class="col-xs-12 form-group text-left">
+              <input type="file" name="img" accept="image/*" />
+              <input type="submit" class="btn btn-default" value="Submit" />
+            </div>
+          </div>
         </div>
       </form>
       <ul class="user-list"></ul>

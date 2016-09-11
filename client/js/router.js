@@ -2,7 +2,6 @@ const Backbone = require('backbone');
 const UserModel = require('./models/UserModel');
 const UsersCollection = require('./collections/UsersCollection');
 const UserListView = require('./views/UserListView');
-const UserProfileView = require('./views/UserProfileView');
 
 let currentview;
 

@@ -25,7 +25,8 @@ module.exports = {
     const user = new UserModel({
       name: req.body.name,
       email: req.body.email,
-      bio: req.body.bio
+      bio: req.body.bio,
+      img: req.body.img
     });
     user.save((err, user) => {
       res.json(user);
@@ -38,6 +39,7 @@ module.exports = {
       user.name = req.body.name;
       user.email = req.body.email;
       user.bio = req.body.bio;
+      user.pic = req.body.pic;
       user.activated = req.body.activated;
 
       user.save(function (err, user) {
