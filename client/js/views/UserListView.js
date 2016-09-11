@@ -24,6 +24,10 @@ const UserListView = Backbone.View.extend({
               <input type="file" name="img" accept="image/*" />
               <input type="submit" class="btn btn-default" value="Submit" />
             </div>
+            <div class="col-xs-12 form-group text-left">
+              <label>Activated:</label>
+              <input type="checkbox" <%= user.get('activated') ? 'checked' : '' %> />
+            </div>
           </div>
         </div>
       </form>
@@ -46,7 +50,7 @@ const UserListView = Backbone.View.extend({
       name: form.find('input[name="name"]').val(),
       email: form.find('input[name="email"]').val(),
       bio: form.find('input[name="bio"]').val(),
-      pic: form.find('input[name="pic"]').val(),
+      img: form.find('input[name="img"]').val(),
     });
 
     user.save(null, {

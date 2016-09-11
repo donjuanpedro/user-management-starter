@@ -50,12 +50,7 @@ module.exports = {
   remove: function(req, res) {
     var id = req.params.id;
     UserModel.findByIdAndRemove({_id: id}, function (err, user) {
-      users.remove(user);
-    });
-    users.save(function(err, user) {
-      users.save(function(err, users) {
-        res.json(users);
-      });
+      return res.json(user);
     });
   },
 };

@@ -3,8 +3,6 @@ const UserModel = require('./models/UserModel');
 const UsersCollection = require('./collections/UsersCollection');
 const UserListView = require('./views/UserListView');
 
-let currentview;
-
 const Router = Backbone.Router.extend({
   routes: {
     "/": "users",
@@ -25,11 +23,6 @@ const Router = Backbone.Router.extend({
 });
 
 function setView(view) {
-  if (currentView) {
-    currentView.remove();
-  }
-  currentView = view;
-
   const app = document.querySelector('#app');
   app.innerHTML = '';
   app.appendChild(view.render().el);
