@@ -21,12 +21,6 @@ module.exports = {
       });
   },
 
-  edit: function(req, res) {
-    var id = req.params.id;
-    UserModel.findOne({_id: id}, function (err, user) {
-      return res.render('user_edit', {user: user});
-    });
-  },
 
   create: function(req, res) {
     const user = new UserModel({
@@ -36,7 +30,7 @@ module.exports = {
       img: req.body.img
     });
     user.save((err, user) => {
-      res.json(user);
+      return res.json(user);
     });
   },
 
@@ -46,11 +40,11 @@ module.exports = {
       user.name = req.body.name;
       user.email = req.body.email;
       user.bio = req.body.bio;
-      user.pic = req.body.pic;
+      user.img = req.body.img;
       user.activated = req.body.activated;
 
       user.save(function (err, user) {
-        res.json(user);
+        return res.json(user);
       });
     });
   },

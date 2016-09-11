@@ -15,7 +15,7 @@ const UserProfileView = Backbone.View.extend({
     </div>
     <div>
       <label>Bio:</label>
-      <p> <%= user.get("bio") %> </p>
+      <span> <%= user.get("bio") %> </span>
     </div>
     <div>
       <label>Activated:</label>

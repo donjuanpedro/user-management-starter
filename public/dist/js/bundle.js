@@ -53,7 +53,11 @@ const UserItemView = Backbone.View.extend({
         <span> <%= user.get('email') %> </span>
       </div>
       <div>
-        <span> <%= user.get('bio.substring(0,20)') %> </span>
+        <span> <%= user.get('bio') %> </span>
+      </div>
+      <div>
+        <label>Activated:</label>
+        <input type="checkbox" <%= user.get('activated') ? 'checked' : '' %> />
       </div>
   `),
 
@@ -76,26 +80,21 @@ const UserListView = Backbone.View.extend({
       <form class="form-inline" action="/users" method="POST">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-xs-12 form-group text-left">
-              <label for="name">Name:</label>
-              <input type="text" class="form-control" name="name" />
+           <div class="col-xs-12">
+            <div class="col-lg-12 form-group text-lef">
+              <input type="text" class="form-control" name="name" placeholder="name"/>
             </div>
-            <div class="col-xs-12 form-group text-left">
-              <label for="email">Email Address</label>
-              <input type="text" class="form-control" name="email" />
+            <div class="col-lg-12 form-group text-left">
+              <input type="text" class="form-control" name="email" placeholder="email"/>
             </div>
-            <div class="col-xs-12 form-group text-left">
-              <label for="bio">Bio</label>
-              <textarea type="text" class="form-control" class="form-control" name="bio" rows="6"></textarea>
+            <div class="col-lg-12 form-group text-left">
+              <input type="text" class="form-control" class="form-control" name="bio" placeholder="bio" />
             </div>
-            <div class="col-xs-12 form-group text-left">
+            <div class="col-lg-12 form-group text-left">
               <input type="file" name="img" accept="image/*" />
-              <input type="submit" class="btn btn-default" value="Submit" />
+              <button type="submit" class="btn btn-default">Submit</button>
             </div>
-            <div class="col-xs-12 form-group text-left">
-              <label>Activated:</label>
-              <input type="checkbox" <%= user.get('activated') ? 'checked' : '' %> />
-            </div>
+           </div>
           </div>
         </div>
       </form>

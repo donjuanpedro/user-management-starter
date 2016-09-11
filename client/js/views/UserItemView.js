@@ -15,7 +15,11 @@ const UserItemView = Backbone.View.extend({
         <span> <%= user.get('email') %> </span>
       </div>
       <div>
-        <span> <%= user.get('bio.substring(0,20)') %> </span>
+        <span> <%= user.get('bio') %> </span>
+      </div>
+      <div>
+        <label>Activated:</label>
+        <input type="checkbox" <%= user.get('activated') ? 'checked' : '' %> />
       </div>
   `),
 

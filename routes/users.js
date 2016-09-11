@@ -1,5 +1,7 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
+const UserModel = require('../models/UserModel.js');
 const UsersController = require('../controllers/UsersController.js');
 
 /* GET users listing. */
