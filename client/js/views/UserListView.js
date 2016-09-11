@@ -1,5 +1,5 @@
 const Backbone = require('backbone');
-const UserView = require('./UserView');
+const UserItemView = require('./UserItemView');
 const UserModel = require('../models/UserModel');
 
 const UserListView = Backbone.View.extend({
