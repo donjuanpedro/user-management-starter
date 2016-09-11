@@ -1,17 +1,24 @@
 const UserModel = require('../models/UserModel.js');
 
 module.exports = {
-  list: function(req, res) {
-    UserModel.find(function(err, users) {
-      res.json(200, users);
+  list(req, res, next) {
+    UserModel.find().exec()
+    .then(users => {
+      return res.json(users);
+    })
+    .catch(err => {
+      return next(err);
     });
   },
 
-  show: function(req, res) {
-    var id = req.params.id;
-    UserModel.findOne({_id: id}, function (err, user) {
-      return res.render('user_view', {user: user});
-    });
+  show(req, res, next) {
+    UserModel.findOne({ _id: req.params.id }).exec()
+      .then(user => {
+        return res.json(user);
+      })
+      .catch(err => {
+        return next(err);
+      });
   },
 
   edit: function(req, res) {

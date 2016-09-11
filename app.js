@@ -11,7 +11,6 @@ const users = require('./routes/users');
 
 // Set up mongoose
 const mongoose = require('mongoose');
-// You need to connect to your MongoDB here
 mongoose.connect('mongodb://localhost/user-management-starter');
 
 const app = express();
@@ -36,19 +35,6 @@ app.get('*', function(req, res, next) {
   return res.render('index');
 });
 
-const server = http.createServer(app);
-const port = 3002;
-
-server.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
-
-// error handlers
-app.use(function(req, res, next) {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
 
 // development error handler
 // will print stacktrace
