@@ -2,7 +2,7 @@ const _ = require('lodash');
 const Backbone = require('backbone');
 
 const UserItemView = Backbone.View.extend({
-  el: '<li></li>',
+  el: '<li class="user-info"></li>',
 
   template: _.template(`
     <a href="#users/<%= user.get('_id') %>">
@@ -22,6 +22,14 @@ const UserItemView = Backbone.View.extend({
         <input type="checkbox" <%= user.get('activated') ? 'checked' : '' %> />
       </div>
   `),
+
+  events: {
+    'click input[type="checkbox"]' : 'handleCheckBoxClick'
+  },
+
+  handleCheckBoxClick(e) {
+    this.model.save({ activated: e.target.checked});
+  },
 
   render() {
     this.$el.html(this.template({ user: this.model }));

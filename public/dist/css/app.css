@@ -1,2 +1,11 @@
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+.user-info {
+  border: 2px solid red;
+  border-radius: 5px;
+}
+
+.user-info.activated {
+  border-color: black;
+}

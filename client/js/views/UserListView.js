@@ -26,7 +26,7 @@ const UserListView = Backbone.View.extend({
           </div>
         </div>
       </form>
-      <ul class="user-list"></ul>
+      <ul></ul>
     </div>
   `,
 
