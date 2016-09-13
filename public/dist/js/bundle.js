@@ -79,11 +79,15 @@ module.exports = Router;
 
 },{"./collections/UsersCollection":2,"./models/UserModel":3,"./views/UserEditView":5,"./views/UserListView":7,"./views/UserProfileView":8,"backbone":9}],5:[function(require,module,exports){
 const Backbone = require('backbone');
-const _ = require('lodash');
 const UserModel = require('../models/UserModel');
+const _ = require('lodash');
+
 const UserEditView = Backbone.View.extend({
+
+  el: `<div class="editProfile"></div>`,
+
   template: _.template(`
-      <form class="form-inline" action="/users/<%=user.get('_id')%>?_method=PUT" method="POST">
+      <form class="form-inline" action="/users/<%= user.get('_id')%>?_method=PUT" method="POST">
         <div class="container-fluid">
           <div class="row">
             <div class="col-xs-12">
@@ -104,7 +108,6 @@ const UserEditView = Backbone.View.extend({
           </div>
         </div>
       </form>
-
       `),
 
   events: {
@@ -131,14 +134,14 @@ const UserEditView = Backbone.View.extend({
   },
 
   render() {
-      this.$el.html(this.template({user: this.model}));
-      return this;
-    }
+    this.$el.html(this.template({ user: this.model }));
+    return this;
+  }
 });
 
 module.exports = UserEditView;
 
-},{"../models/UserModel":3,"backbone":9}],6:[function(require,module,exports){
+},{"../models/UserModel":3,"backbone":9,"lodash":12}],6:[function(require,module,exports){
 const _ = require('lodash');
 const Backbone = require('backbone');
 

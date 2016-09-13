@@ -1,11 +1,13 @@
 const Backbone = require('backbone');
+const UserModel = require('../models/UserModel');
 const _ = require('lodash');
-const UserModel = require('./models/UserModel');
 
 const UserEditView = Backbone.View.extend({
 
+  el: `<div class="editProfile"></div>`,
+
   template: _.template(`
-      <form class="form-inline" action="/users/<%=user.get('_id')%>?_method=PUT" method="POST">
+      <form class="form-inline" action="/users/<%= user.get('_id')%>?_method=PUT" method="POST">
         <div class="container-fluid">
           <div class="row">
             <div class="col-xs-12">
@@ -26,7 +28,6 @@ const UserEditView = Backbone.View.extend({
           </div>
         </div>
       </form>
-
       `),
 
   events: {
@@ -53,7 +54,7 @@ const UserEditView = Backbone.View.extend({
   },
 
   render() {
-    this.$el.html(this.template({user: this.model}));
+    this.$el.html(this.template({ user: this.model }));
     return this;
   }
 });
