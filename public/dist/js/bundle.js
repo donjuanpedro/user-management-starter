@@ -9,7 +9,7 @@ window.$ = window.jQuery = $;
 const router = new Router();
 Backbone.history.start();
 
-},{"./router":4,"backbone":8,"jquery":10}],2:[function(require,module,exports){
+},{"./router":4,"backbone":9,"jquery":11}],2:[function(require,module,exports){
 const Backbone = require('backbone');
 const UserModel = require('../models/UserModel');
 
@@ -20,7 +20,7 @@ const UsersCollection = Backbone.Collection.extend({
 
 module.exports = UsersCollection;
 
-},{"../models/UserModel":3,"backbone":8}],3:[function(require,module,exports){
+},{"../models/UserModel":3,"backbone":9}],3:[function(require,module,exports){
 const Backbone = require('backbone');
 
 const UserModel = Backbone.Model.extend({
@@ -30,12 +30,13 @@ const UserModel = Backbone.Model.extend({
 
 module.exports = UserModel;
 
-},{"backbone":8}],4:[function(require,module,exports){
+},{"backbone":9}],4:[function(require,module,exports){
 const Backbone = require('backbone');
 const UserModel = require('./models/UserModel');
 const UsersCollection = require('./collections/UsersCollection');
 const UserListView = require('./views/UserListView');
 const UserProfileView = require('./views/UserProfileView');
+const UserEditView = require('./views/UserEditView');
 
 let currentView;
 
@@ -43,6 +44,7 @@ const Router = Backbone.Router.extend({
   routes: {
     "/": "users",
     "users/:id": "user",
+    "users/:id/edit": "user",
     "*users": "users"
   },
 
@@ -53,6 +55,7 @@ const Router = Backbone.Router.extend({
   user(id) {
     const user = new UserModel({ _id: id });
     const view = new UserProfileView({ model: user });
+    const edit = new UserEditView({ _id: id });
     setView(view);
   }
 });
@@ -70,7 +73,73 @@ function setView(view) {
 
 module.exports = Router;
 
-},{"./collections/UsersCollection":2,"./models/UserModel":3,"./views/UserListView":6,"./views/UserProfileView":7,"backbone":8}],5:[function(require,module,exports){
+},{"./collections/UsersCollection":2,"./models/UserModel":3,"./views/UserEditView":5,"./views/UserListView":7,"./views/UserProfileView":8,"backbone":9}],5:[function(require,module,exports){
+const Backbone = require('backbone');
+const UserItemView = require('./UserItemView');
+const UserModel = require('../models/UserModel');
+
+const UserEditView = Backbone.View.extend({
+  el: `
+      <form class="form-inline" action="/users/<%=user['_id']%>?_method=PUT" method="POST">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="col-lg-12 form-group text-lef">
+                <input value="<%= user.get('name')%>" type="text" class="form-control" name="name" placeholder="name"/>
+              </div>
+              <div class="col-lg-12 form-group text-left">
+                <input value="<%= user.get('email')%>" type="text" class="form-control" name="email" placeholder="email"/>
+              </div>
+              <div class="col-lg-12 form-group text-left">
+                <input value="<%= user.get('bio')%>" type="text" class="form-control" class="form-control" name="bio" placeholder="bio" />
+              </div>
+              <div class="col-lg-12 form-group text-left">
+                <input value="<%= user.get('profilePic')%>" type="file" name="profilePic" accept="image/*" />
+                <button type="submit" class="btn btn-default">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      `,
+
+  events: {
+    'submit form': 'handleFormSubmit'
+  },
+
+  handleFormSubmit(e) {
+    const form = $(e.target);
+    const user = new UserModel({
+      name: form.find('input[name="name"]').val(),
+      email: form.find('input[name="email"]').val(),
+      bio: form.find('input[name="bio"]').val(),
+      img: form.find('input[name="img"]').val()
+    });
+
+    user.save(null, {
+      success: () => {
+        this.collection.add(user);
+        form.find('input[type="text"]').val('');
+        this.render();
+      }
+    });
+    e.preventDefault();
+  },
+
+  render() {
+    this.$el.find('ul').html('');
+    this.collection.forEach(user => {
+      const view = new UserItemView({ model: user });
+      this.$el.find('ul').append(view.render().el);
+    });
+    return this;
+  }
+});
+
+module.exports = UserEditView;
+
+},{"../models/UserModel":3,"./UserItemView":6,"backbone":9}],6:[function(require,module,exports){
 const _ = require('lodash');
 const Backbone = require('backbone');
 
@@ -112,7 +181,7 @@ const UserItemView = Backbone.View.extend({
 
 module.exports = UserItemView;
 
-},{"backbone":8,"lodash":11}],6:[function(require,module,exports){
+},{"backbone":9,"lodash":12}],7:[function(require,module,exports){
 const Backbone = require('backbone');
 const UserItemView = require('./UserItemView');
 const UserModel = require('../models/UserModel');
@@ -185,7 +254,7 @@ const UserListView = Backbone.View.extend({
 
 module.exports = UserListView;
 
-},{"../models/UserModel":3,"./UserItemView":5,"backbone":8}],7:[function(require,module,exports){
+},{"../models/UserModel":3,"./UserItemView":6,"backbone":9}],8:[function(require,module,exports){
 const _ = require('lodash');
 const Backbone = require('backbone');
 
@@ -212,6 +281,7 @@ const UserProfileView = Backbone.View.extend({
       <label>Activated:</label>
       <input type="checkbox" <%= user.get('activated') ? 'checked' : '' %> />
     </div>
+    <a href="#users/<%= user.get('_id') %>/edit">Edit</a>
     `),
 
   initialize() {
@@ -241,7 +311,7 @@ const UserProfileView = Backbone.View.extend({
 
 module.exports = UserProfileView;
 
-},{"backbone":8,"lodash":11}],8:[function(require,module,exports){
+},{"backbone":9,"lodash":12}],9:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.3.3
 
@@ -2166,7 +2236,7 @@ module.exports = UserProfileView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"jquery":10,"underscore":9}],9:[function(require,module,exports){
+},{"jquery":11,"underscore":10}],10:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -3716,7 +3786,7 @@ module.exports = UserProfileView;
   }
 }.call(this));
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /*eslint-disable no-unused-vars*/
 /*!
  * jQuery JavaScript Library v3.1.0
@@ -13792,7 +13862,7 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function (global){
 /**
  * @license

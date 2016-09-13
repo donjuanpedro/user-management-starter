@@ -24,6 +24,7 @@ const UserProfileView = Backbone.View.extend({
       <label>Activated:</label>
       <input type="checkbox" <%= user.get('activated') ? 'checked' : '' %> />
     </div>
+    <a href="#users/<%= user.get('_id') %>/edit">Edit</a>
     `),
 
     initialize() {

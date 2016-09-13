@@ -9,6 +9,8 @@ router.get('/', UsersController.list);
 
 router.get('/:id', UsersController.show);
 
+router.get('/:id/edit', UsersController.edit);
+
 router.post('/', UsersController.create);
 
 router.put('/:id', UsersController.update);

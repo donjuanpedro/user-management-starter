@@ -21,6 +21,16 @@ module.exports = {
       });
   },
 
+  edit: function (req, res) {
+    UserModel.findOne({ _id: req.params.id }).exec()
+      .then(user => {
+        return res.json(user);
+      })
+      .catch(err => {
+        return next(err);
+      });
+  },
+
 
   create: function(req, res) {
     const user = new UserModel({

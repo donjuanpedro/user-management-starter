@@ -3,6 +3,7 @@ const UserModel = require('./models/UserModel');
 const UsersCollection = require('./collections/UsersCollection');
 const UserListView = require('./views/UserListView');
 const UserProfileView = require('./views/UserProfileView');
+const UserEditView = require('./views/UserEditView');
 
 let currentView;
 
@@ -10,6 +11,7 @@ const Router = Backbone.Router.extend({
   routes: {
     "/": "users",
     "users/:id" : "user",
+    "users/:id/edit": "user",
     "*users": "users",
   },
 
@@ -20,6 +22,7 @@ const Router = Backbone.Router.extend({
   user(id) {
     const user = new UserModel({ _id: id});
     const view = new UserProfileView({model: user});
+    const edit = new UserEditView({_id: id});
     setView(view);
   }
 });
