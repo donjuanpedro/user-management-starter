@@ -19,7 +19,7 @@ const UserListView = Backbone.View.extend({
               <input type="text" class="form-control" class="form-control" name="bio" placeholder="bio" />
             </div>
             <div class="col-lg-12 form-group text-left">
-              <input type="file" name="img" accept="image/*" />
+              <input type="file" name="profilePic" accept="image/*" />
               <button type="submit" class="btn btn-default">Submit</button>
             </div>
            </div>

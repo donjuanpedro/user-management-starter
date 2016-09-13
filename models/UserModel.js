@@ -11,9 +11,9 @@ const userSchema = new Schema({
   bio: {
     type: String,
   },
-  img: {
+  profilePic: {
     data: Buffer,
-    type: String
+    contentType: String
   },
   activated: {
     type: Boolean,

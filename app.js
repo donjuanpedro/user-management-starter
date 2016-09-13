@@ -58,12 +58,5 @@ app.use(function(err, req, res, next) {
   });
 });
 
-const server = http.createServer(app);
-const port = 3002;
-
-server.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
-
 
 module.exports = app;

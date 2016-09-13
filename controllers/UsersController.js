@@ -27,7 +27,7 @@ module.exports = {
       name: req.body.name,
       email: req.body.email,
       bio: req.body.bio,
-      img: req.body.img
+      img: req.body.profilePic
     });
     user.save((err, user) => {
       return res.json(user);
@@ -40,7 +40,7 @@ module.exports = {
       user.name = req.body.name;
       user.email = req.body.email;
       user.bio = req.body.bio;
-      user.img = req.body.img;
+      user.profilePic = req.body.profilePic;
       user.activated = req.body.activated;
 
       user.save(function (err, user) {

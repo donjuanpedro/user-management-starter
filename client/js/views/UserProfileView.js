@@ -6,6 +6,9 @@ const UserProfileView = Backbone.View.extend({
 
   template: _.template(`
     <div>
+      <span> <%= user.get("img") %> </span>
+    </div>
+    <div>
       <label>Name:</label>
       <span> <%= user.get("name") %> </span>
     </div>
