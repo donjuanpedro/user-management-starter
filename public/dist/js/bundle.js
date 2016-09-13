@@ -87,7 +87,7 @@ const UserEditView = Backbone.View.extend({
   el: `<div class="editProfile"></div>`,
 
   template: _.template(`
-      <form class="form-inline" action="/users/<%= user.get('_id')%>?_method=PUT" method="POST">
+      <form class="form-inline" action="#users/<%= user.get('_id')%>?_method=PUT" method="POST">
         <div class="container-fluid">
           <div class="row">
             <div class="col-xs-12">
@@ -116,21 +116,23 @@ const UserEditView = Backbone.View.extend({
 
   handleFormSubmit(e) {
     const form = $(e.target);
-    const user = new UserModel({
+
+    this.model.save({
       name: form.find('input[name="name"]').val(),
       email: form.find('input[name="email"]').val(),
       bio: form.find('input[name="bio"]').val(),
       img: form.find('input[name="img"]').val()
-    });
-
-    user.save(null, {
+    }, {
       success: () => {
-        this.model.add(user);
         form.find('input[type="text"]').val('');
-        this.render();
       }
     });
     e.preventDefault();
+  },
+
+  initialize() {
+    this.model.fetch();
+    this.listenTo(this.model, 'sync', this.render);
   },
 
   render() {
@@ -175,7 +177,17 @@ const UserItemView = Backbone.View.extend({
     this.model.save({ activated: e.target.checked });
   },
 
+  initialize() {
+    this.listenTo(this.model, 'sync', this.render);
+  },
+
   render() {
+    if (this.model.get('activated')) {
+      this.$el.addClass('activated');
+    } else {
+      this.$el.removeClass('activated');
+    }
+
     this.$el.html(this.template({ user: this.model }));
     return this;
   }

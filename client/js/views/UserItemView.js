@@ -31,8 +31,18 @@ const UserItemView = Backbone.View.extend({
     this.model.save({ activated: e.target.checked});
   },
 
+  initialize() {
+    this.listenTo(this.model, 'sync', this.render)
+  },
+
   render() {
-    this.$el.html(this.template({ user: this.model }));
+    if (this.model.get('activated')) {
+      this.$el.addClass('activated');
+    } else {
+      this.$el.removeClass('activated');
+    }
+
+    this.$el.html(this.template({user: this.model}));
     return this;
   }
 });

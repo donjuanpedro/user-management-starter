@@ -4,7 +4,7 @@ module.exports = {
   list(req, res, next) {
     UserModel.find().exec()
     .then(users => {
-      return res.json(users);
+      res.json(200, users);
     })
     .catch(err => {
       return next(err);
@@ -40,7 +40,7 @@ module.exports = {
       img: req.body.profilePic
     });
     user.save((err, user) => {
-      return res.json(user);
+      res.json(user);
     });
   },
 
@@ -54,7 +54,7 @@ module.exports = {
       user.activated = req.body.activated;
 
       user.save(function (err, user) {
-        return res.json(user);
+        res.json(user);
       });
     });
   },
