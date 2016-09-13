@@ -11,7 +11,7 @@ const Router = Backbone.Router.extend({
   routes: {
     "/": "users",
     "users/:id" : "user",
-    "users/:id/edit": "user",
+    "users/:id/edit": "userEdit",
     "*users": "users",
   },
 
@@ -22,7 +22,11 @@ const Router = Backbone.Router.extend({
   user(id) {
     const user = new UserModel({ _id: id});
     const view = new UserProfileView({model: user});
-    const edit = new UserEditView({_id: id});
+    setView(view);
+  },
+  userEdit(id) {
+    const user = new UserModel({_id: id});
+    const view = new UserEditView({model: user});
     setView(view);
   }
 });

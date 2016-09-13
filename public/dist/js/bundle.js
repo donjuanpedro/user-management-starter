@@ -44,7 +44,7 @@ const Router = Backbone.Router.extend({
   routes: {
     "/": "users",
     "users/:id": "user",
-    "users/:id/edit": "user",
+    "users/:id/edit": "userEdit",
     "*users": "users"
   },
 
@@ -55,7 +55,11 @@ const Router = Backbone.Router.extend({
   user(id) {
     const user = new UserModel({ _id: id });
     const view = new UserProfileView({ model: user });
-    const edit = new UserEditView({ _id: id });
+    setView(view);
+  },
+  userEdit(id) {
+    const edit = new UserModel({ _id: id });
+    const view = new UserEditView({ model: user });
     setView(view);
   }
 });
@@ -75,16 +79,15 @@ module.exports = Router;
 
 },{"./collections/UsersCollection":2,"./models/UserModel":3,"./views/UserEditView":5,"./views/UserListView":7,"./views/UserProfileView":8,"backbone":9}],5:[function(require,module,exports){
 const Backbone = require('backbone');
-const UserItemView = require('./UserItemView');
 const UserModel = require('../models/UserModel');
 
 const UserEditView = Backbone.View.extend({
   el: `
-      <form class="form-inline" action="/users/<%=user['_id']%>?_method=PUT" method="POST">
+      <form class="form-inline" action="/users/<%=user.get('_id')%>?_method=PUT" method="POST">
         <div class="container-fluid">
           <div class="row">
             <div class="col-xs-12">
-              <div class="col-lg-12 form-group text-lef">
+              <div class="col-lg-12 form-group text-left">
                 <input value="<%= user.get('name')%>" type="text" class="form-control" name="name" placeholder="name"/>
               </div>
               <div class="col-lg-12 form-group text-left">
@@ -130,7 +133,7 @@ const UserEditView = Backbone.View.extend({
   render() {
     this.$el.find('ul').html('');
     this.collection.forEach(user => {
-      const view = new UserItemView({ model: user });
+      const view = new UserEditView({ model: user });
       this.$el.find('ul').append(view.render().el);
     });
     return this;
@@ -139,7 +142,7 @@ const UserEditView = Backbone.View.extend({
 
 module.exports = UserEditView;
 
-},{"../models/UserModel":3,"./UserItemView":6,"backbone":9}],6:[function(require,module,exports){
+},{"../models/UserModel":3,"backbone":9}],6:[function(require,module,exports){
 const _ = require('lodash');
 const Backbone = require('backbone');
 
