@@ -58,7 +58,7 @@ const Router = Backbone.Router.extend({
     setView(view);
   },
   userEdit(id) {
-    const edit = new UserModel({ _id: id });
+    const user = new UserModel({ _id: id });
     const view = new UserEditView({ model: user });
     setView(view);
   }
@@ -79,10 +79,10 @@ module.exports = Router;
 
 },{"./collections/UsersCollection":2,"./models/UserModel":3,"./views/UserEditView":5,"./views/UserListView":7,"./views/UserProfileView":8,"backbone":9}],5:[function(require,module,exports){
 const Backbone = require('backbone');
+const _ = require('lodash');
 const UserModel = require('../models/UserModel');
-
 const UserEditView = Backbone.View.extend({
-  el: `
+  template: _.template(`
       <form class="form-inline" action="/users/<%=user.get('_id')%>?_method=PUT" method="POST">
         <div class="container-fluid">
           <div class="row">
@@ -105,7 +105,7 @@ const UserEditView = Backbone.View.extend({
         </div>
       </form>
 
-      `,
+      `),
 
   events: {
     'submit form': 'handleFormSubmit'
@@ -122,7 +122,7 @@ const UserEditView = Backbone.View.extend({
 
     user.save(null, {
       success: () => {
-        this.collection.add(user);
+        this.model.add(user);
         form.find('input[type="text"]').val('');
         this.render();
       }
@@ -131,13 +131,9 @@ const UserEditView = Backbone.View.extend({
   },
 
   render() {
-    this.$el.find('ul').html('');
-    this.collection.forEach(user => {
-      const view = new UserEditView({ model: user });
-      this.$el.find('ul').append(view.render().el);
-    });
-    return this;
-  }
+      this.$el.html(this.template({user: this.model}));
+      return this;
+    }
 });
 
 module.exports = UserEditView;

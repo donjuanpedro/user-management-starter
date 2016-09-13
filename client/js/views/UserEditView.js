@@ -1,8 +1,10 @@
 const Backbone = require('backbone');
+const _ = require('lodash');
 const UserModel = require('./models/UserModel');
 
 const UserEditView = Backbone.View.extend({
-  el: `
+
+  template: _.template(`
       <form class="form-inline" action="/users/<%=user.get('_id')%>?_method=PUT" method="POST">
         <div class="container-fluid">
           <div class="row">
@@ -25,7 +27,7 @@ const UserEditView = Backbone.View.extend({
         </div>
       </form>
 
-      `,
+      `),
 
   events: {
     'submit form': 'handleFormSubmit'
@@ -42,7 +44,7 @@ const UserEditView = Backbone.View.extend({
 
     user.save(null, {
       success: () => {
-        this.collection.add(user);
+        this.model.add(user);
         form.find('input[type="text"]').val('');
         this.render();
       }
@@ -51,11 +53,7 @@ const UserEditView = Backbone.View.extend({
   },
 
   render() {
-    this.$el.find('ul').html('');
-    this.collection.forEach((user) => {
-      const view = new UserEditView({ model: user});
-      this.$el.find('ul').append(view.render().el);
-    });
+    this.$el.html(this.template({user: this.model}));
     return this;
   }
 });
