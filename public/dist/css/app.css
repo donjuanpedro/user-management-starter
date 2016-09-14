@@ -1,20 +1,16 @@
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
 ul {
-    list-style: none;
-}
+    list-style: none; }
 
 .user-info {
     font-size: 14px;
     padding: 10px;
     border: 2px solid black;
-    border-radius: 5px;
-}
-
+    border-radius: 5px; }
 .user-info.activated {
-    border-color: red;
-}
+      border-color: red; }
 .user-info label {
-    font-size: 15px;
-    font-weight: bold;
-}
+      font-size: 15px;
+      font-weight: bold; }
